@@ -15,7 +15,7 @@ function App() {
 
   const fetchMovie = (movieName) => {
     setLoading(true);
-    const apiUrl = `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}`;
+    const apiUrl = `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}`;
     const url = `${apiUrl}&t=${movieName}`;
   
 
