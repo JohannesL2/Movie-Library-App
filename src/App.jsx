@@ -50,6 +50,13 @@ function App() {
 
   return (
     <div>
+
+      <meta property='og:title' content='Movie Library App'/>
+      <meta property='og:description' content='Search for a movie'/>
+      <meta property='og:image' content='/logo.jpg'/>
+      <meta property='og:url' content='https://johannesl2-movielibraryapp.netlify.app'/>
+      <meta property='og:type' content='website'/>
+
       <div className="container text-white p-4">
       <h1 className='Title'>Movie Library</h1>
         <input className='w-full movieInput' autoComplete='off' autoFocus="on" type="text" id='movieInput'
