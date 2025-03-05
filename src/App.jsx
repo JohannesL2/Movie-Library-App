@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 
 function App() {
@@ -10,6 +10,23 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [showMovieDetails, setShowMovieDetails] = useState(false);
+  const [showTrending, setShowTrending] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+
+
+  //referens för trending-container
+  const trendingcontainerRef = useRef(null);
+
+  useEffect(() => {
+    if (movie.length > 2) {
+      const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${movie}`;
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => setSuggestions(data.results.slice(0, 5)))
+    } else {
+      setSuggestions([]);
+    }
+  }, [movie]);
 
 
   const fetchMovie = (movieName) => {
@@ -50,6 +67,11 @@ fetch(trendingUrl)
   .then((data) => {
     if (data.results && data.results.length > 0) {
       setTrendingMovies(data.results);
+      setShowTrending(true);
+
+      setTimeout(() => {
+        trendingcontainerRef.current?.scrollIntoView({behavior: "smooth"});
+      }, 200);
     }
     setLoading(false);
   })
@@ -78,6 +100,25 @@ fetch(trendingUrl)
         onChange={(e) => setMovie(e.target.value)}
         onKeyDown={handleKeyPress}
         />
+
+        <div className={`suggestions-container ${movie.length > 0 && suggestions.length > 0 ? 'show' : ''}`}>
+          {movie.length > 0 && suggestions.length > 0 && suggestions.map((suggestion) => (
+            <div
+            key={suggestion.id}
+            className='suggestion-item'
+            onClick={() => {
+              setMovie(suggestion.title);
+              fetchMovie(suggestion.title);
+              setSuggestions([]);
+              setMovie("");
+            }}
+            >
+            {suggestion.title}
+            </div>
+          ))}
+        </div>
+
+
         <div className='buttonContainer'>
         <button id='movieBtn' className='w-full text-black movieBtn' onClick={handleSearchClick}>Search Movie</button>
 
@@ -100,7 +141,8 @@ fetch(trendingUrl)
             </>
         )}
         </div>
-        <div className='trending-container'>
+        {showTrending && (
+        <div className='trending-container' ref={trendingcontainerRef}>
         <h2>Trending Movies</h2>
           <div className='trending-grid'>
           {trendingMovies.map((movie) => (
@@ -115,6 +157,7 @@ fetch(trendingUrl)
           ))}
             </div>
         </div>
+    )}
 </div>
   )
 }

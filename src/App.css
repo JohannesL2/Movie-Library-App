@@ -15,12 +15,17 @@ body {
 .container {
   background: radial-gradient(circle, #4ECDC4, #4e9887);
   border-radius: 10px;
+  padding: 20px;
+  margin: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .Title {
   margin: 0;
   font-weight: 800;
   font-size: 36px;
+  text-align: center;
 }
 
 .movieTitle {
@@ -47,7 +52,6 @@ body {
   padding: 0.8em;
   background-color: #e6c660;
   border-radius: 10px;
-  width: 100%;
   margin-top: 10px;
   color: #fff;
   width: 50%;
@@ -57,6 +61,12 @@ body {
     background-color: #c0a652;
     cursor: pointer;
     transform: scale(1.01);
+}
+
+@media (max-width: 640px) {
+  .movieBtn, .movieTrendingBtn {
+    width: 100%; /* Full width on mobile */
+  }
 }
 
 .movieDetails {
@@ -109,7 +119,7 @@ body {
   color: #000000;
   font-weight: 700;
   background-color: #ffffff;
-  width: 100%;
+  width: 90%;
   outline: none;
 }
 
@@ -151,25 +161,26 @@ body {
   max-width: 100%
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.suggestions-container {
+  display: none;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  width: 100%;
+  border: 5px solid #ccc;
+  border-radius: 10px;
+  border-top: none;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.suggestions-container.show {
+  display: block;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
 }
