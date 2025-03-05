@@ -9,29 +9,16 @@ body {
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  background: radial-gradient(circle, #3e928b, #4e9887);
 }
 
 .container {
-  background-color: #4ECDC4;
+  background: radial-gradient(circle, #4ECDC4, #4e9887);
   border-radius: 10px;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 .Title {
   margin: 0;
-  padding: 0.5em;
   font-weight: 800;
   font-size: 36px;
 }
@@ -46,15 +33,90 @@ body {
   background-color: #FF6B6B;
   padding: 0.8em;
   margin-top: 0.8em;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  width: 50%;
+}
+.movieBtn:hover {
+  background-color: #ea6262;
+  transform: scale(1.01);
 }
 
+.movieTrendingBtn {
+  padding: 0.8em;
+  background-color: #e6c660;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+  color: #fff;
+  width: 50%;
+}
+
+.movieTrendingBtn:hover {
+    background-color: #c0a652;
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.movieDetails {
+  position: relative;
+  margin-top: 15px;
+  background-color: rgb(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.closeBtn {
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.trending-container {
+  text-align: center;
+  color: #ffffff;
+}
+
+.trending-grid {
+  display: grid;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-items: center;
+  padding: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.trending-movie {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.trending-movie:hover {
+  transform: scale(1.05)
+}
+
+
 .movieInput {
-  padding: 0.5em;
+  padding: 12px;
   border-radius: 10px;
   font-size: 20px;
   color: #000000;
   font-weight: 700;
   background-color: #ffffff;
+  width: 100%;
+  outline: none;
+}
+
+.movieInput:focus {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #000000;
+  background-color: #eae4e4;
 }
 
 .movieDesc {
@@ -74,6 +136,9 @@ body {
   background-color: #FF6B6B;
   font-weight:700;
   font-size: 18px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 .movieContainer {
@@ -83,7 +148,7 @@ body {
 }
 
 .movieDescContainer {
-  max-width: 50%;
+  max-width: 100%
 }
 
 @keyframes logo-spin {
