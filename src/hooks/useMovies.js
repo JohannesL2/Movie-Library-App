@@ -3,10 +3,9 @@ import { searchMovies, getTrendingMovies } from "../services/movieService";
 
 export function useMovies() {
     const [movie, setMovie] = useState("");
-    const [movieDesc, setMovieDesc] = useState("");
+    const [movieDetails, setMovieDetails] = useState(null);
     const [loading, setLoading] = useState(false);
     const [trendingMovies, setTrendingMovies] = useState([]);
-    const [showMovieDetails, setShowMovieDetails] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
@@ -23,9 +22,9 @@ export function useMovies() {
       setLoading(true);
       const data = await searchMovies(title);
       if (data.results?.length) {
-        setMovieDesc(data.results[0]);
+        setMovieDetails(data.results[0]);
       } else {
-        setMovieDesc({title: "Movie not found"});
+        setMovieDetails({title: "Movie not found"});
       }
       setLoading(false);
     };
@@ -41,7 +40,7 @@ export function useMovies() {
       movie, setMovie,
       suggestions, setSuggestions,
       loading,
-      movieDesc, setMovieDesc,
+      movieDetails, setMovieDetails,
       trendingMovies, fetchMovie, fetchTrending
     };
 }

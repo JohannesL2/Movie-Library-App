@@ -1,165 +1,49 @@
-import { useState, useRef, useEffect } from 'react'
-import './App.css'
+import './App.css';
+import { useMovies } from './hooks/useMovies';
+import SearchBar from './components/SearchBar';
+import Suggestions from './components/Suggestions';
+import MovieDetails from './components/MovieDetails';
+import TrendingMovies from './components/TrendingMovies';
 
 function App() {
-  const [movie, setMovie] = useState("");
-  const [movieTitle, setMovieTitle] = useState("");
-  const [moviePoster, setMoviePoster] = useState("");
-  const [movieDesc, setMovieDesc] = useState("");
-  const [movieimdbRating, setMovieimdbRating] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [showMovieDetails, setShowMovieDetails] = useState(false);
-  const [showTrending, setShowTrending] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
+  const {
+    movie, setMovie,
+    suggestions, setSuggestions,
+    loading,
+    movieDetails, setMovieDetails,
+    trendingMovies,
+    fetchMovie, fetchTrending
+  } = useMovies();
 
-
-  //referens för trending-container
-  const trendingcontainerRef = useRef(null);
-
-  useEffect(() => {
-    if (movie.length > 2) {
-      const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${movie}`;
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => setSuggestions(data.results.slice(0, 5)))
-    } else {
-      setSuggestions([]);
-    }
-  }, [movie]);
-
-
-  const fetchMovie = (movieName) => {
-    setLoading(true);
-    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
-    const url = `${apiUrl}&query=${movieName}`;
-  
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.results && data.results.length > 0) {
-        const firstResult = data.results[0];
-        setMovieTitle(firstResult.title);
-        setMoviePoster(firstResult.poster_path
-          ? `https://image.tmdb.org/t/p/w500${firstResult.poster_path}`
-          : ""
-        );
-        setMovieDesc(firstResult.overview);
-        setMovieimdbRating(`IMDb Rating: ${firstResult.vote_average.toFixed(1)}`);
-        setShowMovieDetails(true);
-
-        window.scrollTo({top: 0, behavior: "smooth"})
-      } else {
-        setMovieTitle("Movie not found")
-        setShowMovieDetails(true)
-      }
-      setLoading(false);
-    });
+  const handleSearch = () => {
+    if (movie) fetchMovie(movie);
   };
 
-  const fetchTrending = () => {
-    setLoading(true);
-    const trendingUrl = `https://api.themoviedb.org/3/trending/movie/day?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
-    
-fetch(trendingUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    if (data.results && data.results.length > 0) {
-      setTrendingMovies(data.results);
-      setShowTrending(true);
-
-      setTimeout(() => {
-        trendingcontainerRef.current?.scrollIntoView({behavior: "smooth"});
-      }, 200);
-    }
-    setLoading(false);
-  })
-}
-
-
-  const handleSearchClick = () => {
-    if (movie) {
-      fetchMovie(movie);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
     }
   };
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSearchClick();
-    }
-  }
 
   return (
     <div>
       <div className="container text-white p-4">
       <h1 className='Title'>Movie Library</h1>
-        <input className='w-full movieInput' autoComplete='off' autoFocus="on" type="text" id='movieInput'
-        value={movie}
-        onChange={(e) => setMovie(e.target.value)}
-        onKeyDown={handleKeyPress}
-        />
 
-        <div className={`suggestions-container ${movie.length > 0 && suggestions.length > 0 ? 'show' : ''}`}>
-          {movie.length > 0 && suggestions.length > 0 && suggestions.map((suggestion) => (
-            <div
-            key={suggestion.id}
-            className='suggestion-item'
-            onClick={() => {
-              setMovie(suggestion.title);
-              fetchMovie(suggestion.title);
-              setSuggestions([]);
-              setMovie("");
-            }}
-            >
-            {suggestion.title}
-            </div>
-          ))}
-        </div>
+      <SearchBar movie={movie} setMovie={setMovie} onSearch={handleSearch} onKeyPress={handleKeyPress} />
+      <Suggestions suggestions={suggestions} onSelect={(title) => { fetchMovie(title); setSuggestions([]); setMovie("");}} />
 
+      <div className='buttonContainer'>
+        <button onClick={handleSearch}>Search Movie</button>
+        <button onClick={fetchTrending}>Update what's trending Today</button>
+      </div>
 
-        <div className='buttonContainer'>
-        <button id='movieBtn' className='w-full text-black movieBtn' onClick={handleSearchClick}>Search Movie</button>
-
-        <button id='movieTrendingBtn' className='w-full text-black movieTrendingBtn' onClick={fetchTrending}>Update what's trending Today</button>
-        </div>
-
-        {loading && <p className='loadingText'>Loading movie...</p>}
-        {!loading && showMovieDetails && (<>
-        <div className='movieDetails'>
-          <button className='closeBtn' onClick={() => setShowMovieDetails(false)}>❌</button>
-        <p className='movieTitle'>{movieTitle}</p>
-        <div className='movieContainer'>
-        <img className='moviePoster' src={moviePoster} alt="" />
-        <div className='movieDescContainer'>
-        <p className='movieDesc'>{movieDesc}</p>
-        {movieimdbRating && <p className='imdbRating'>{movieimdbRating}</p>}
-        </div>
-        </div>
-            </div>
-            </>
-        )}
-        </div>
-        {showTrending && (
-        <div className='trending-container' ref={trendingcontainerRef}>
-        <h2>Trending Movies</h2>
-          <div className='trending-grid'>
-          {trendingMovies.map((movie) => (
-            <div key={movie.id} className='trending-movie'
-            onClick={() => fetchMovie(movie.title)}
-            >
-              <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" 
-              className='trending-movie-poster'
-              />
-              <p className='trending-movie-title'>{movie.title}</p>
-              </div>
-          ))}
-            </div>
-        </div>
-    )}
-</div>
+      {loading && <p className='loadingText'>Loading...</p>}
+      {!loading && movieDetails && <MovieDetails movie={movieDetails} onClose={() => setMovieDetails(null)}/>}
+      {trendingMovies.length > 0 && <TrendingMovies movies={trendingMovies} onSelect={fetchMovie} />}
+      </div>
+    </div>
   )
 }
-
-export default App
+export default App;
