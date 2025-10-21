@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { getTrendingMovies } from "../services/movieService";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 
 export default function Home() {
@@ -50,6 +51,13 @@ export default function Home() {
         ))}
       </Slider>
       </div>
+
+      <Link 
+        className="py-4 w-full mt-12 bg-zinc-100 hover:bg-zinc-300 cursor-pointer transition-colors text-zinc-800 font-bold rounded-xl text-center block"
+        to="/trending"
+        >
+          Find your new favorite movie here!
+        </Link>
     </div>
   );
 }
