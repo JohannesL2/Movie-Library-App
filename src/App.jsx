@@ -4,68 +4,57 @@ import SearchBar from './components/SearchBar';
 import Suggestions from './components/Suggestions';
 import MovieDetails from './components/MovieDetails';
 import TrendingMovies from './components/TrendingMovies';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Trending from './pages/Trending';
 import TheMovieDB_Logo from './assets/TMDB_logo.png';
 
 function App() {
-  const {
-    movie, setMovie,
-    suggestions, setSuggestions,
-    loading,
-    movieDetails, setMovieDetails,
-    trendingMovies,
-    fetchMovie, fetchTrending
-  } = useMovies();
-
-  const handleSearch = () => {
-    if (movie) fetchMovie(movie);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
-  };
 
   return (
-  <div>
+  <div className='bg-zinc-800 text-white max-w-3xl'>
     <BrowserRouter>
-    <div>
-      <div className="container text-white p-4">
-      <h1 className='Title'>Movie Library</h1>
-
-      <SearchBar movie={movie} setMovie={setMovie} onSearch={handleSearch} onKeyPress={handleKeyPress} />
-      <Suggestions suggestions={suggestions} onSelect={(title) => { fetchMovie(title); setSuggestions([]); setMovie("");}} />
-
-      <div className='buttonContainer'>
-        <button onClick={handleSearch}>Search Movie</button>
-        <button onClick={fetchTrending}>Update what's trending Today</button>
-      </div>
-
-      {loading && <p className='loadingText'>Loading...</p>}
-      {!loading && movieDetails && <MovieDetails movie={movieDetails} onClose={() => setMovieDetails(null)}/>}
-      {trendingMovies.length > 0 && <TrendingMovies movies={trendingMovies} onSelect={fetchMovie} />}
-      </div>
-    </div>
-    
-
-      <nav className='flex justify-center'>
-        <Link className='hover:text-yellow-400' to="/">Home</Link> | {" "}
-        <Link className='hover:text-yellow-400' to="/movies">Movies</Link> | {" "}
-        <Link className='hover:text-yellow-400' to="/trending">Trending</Link>
+    <header className='bg-zinc-900 py-4 shadow-md'>
+      <nav className='flex justify-center gap-8'>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+        isActive
+          ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+          : "text-white hover:text-yellow-400"
+        }
+      >Home</NavLink>
+        <NavLink className={({ isActive }) =>
+        isActive
+          ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+          : "text-white hover:text-yellow-400"
+        } to="/movies">Movies</NavLink>
+        <NavLink className={({ isActive }) =>
+        isActive
+          ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+          : "text-white hover:text-yellow-400"
+        } to="/trending">Trending</NavLink>
       </nav>
+    </header>
+
     {/* Routes*/}
+    <main className='p-4'>
       <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/trending' element={<Trending />} />
       </Routes>
-    </BrowserRouter>
-    <img src={TheMovieDB_Logo} alt="" className='block mx-auto mt-12 mb-4 w-20 opacity-70'/>
+    </main>
+
+    <footer>
+          <img 
+            src={TheMovieDB_Logo} 
+            alt="The Movie Database logo" 
+            className='block mx-auto mt-12 mb-4 w-20 opacity-70'
+          />
+    </footer>
+      </BrowserRouter>
     </div>
   );
 }
