@@ -20,7 +20,6 @@ function TrendingMovies() {
 
   return (
     <div>
-      <h2>Trending today</h2>
       <ul className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {movies.map((movie) => (
           <li 
