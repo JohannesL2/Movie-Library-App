@@ -58,6 +58,13 @@ export default function Home() {
         >
           Find your new favorite movie here!
         </Link>
+
+        <Link 
+        className="py-4 w-full mt-4 bg-zinc-100 hover:bg-zinc-300 cursor-pointer transition-colors text-zinc-800 font-bold rounded-xl text-center block"
+        to="/movies"
+        >
+          Or search for a movie here...
+        </Link>
     </div>
   );
 }
