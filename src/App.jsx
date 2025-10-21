@@ -4,6 +4,10 @@ import SearchBar from './components/SearchBar';
 import Suggestions from './components/Suggestions';
 import MovieDetails from './components/MovieDetails';
 import TrendingMovies from './components/TrendingMovies';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Movies from './pages/Movies';
+import Trending from './pages/Trending';
 
 function App() {
   const {
@@ -27,6 +31,7 @@ function App() {
   };
 
   return (
+    <BrowserRouter>
     <div>
       <div className="container text-white p-4">
       <h1 className='Title'>Movie Library</h1>
@@ -44,6 +49,19 @@ function App() {
       {trendingMovies.length > 0 && <TrendingMovies movies={trendingMovies} onSelect={fetchMovie} />}
       </div>
     </div>
-  )
+
+      <nav>
+        <Link to="/">Home</Link> | {" "}
+        <Link to="/movies"></Link> | {" "}
+        <Link to="/trending"></Link> | {" "}
+      </nav>
+    {/* Routes*/}
+      <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/movies' element={<Movies />} />
+          <Route path='/trending' element={<Trending />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 export default App;
