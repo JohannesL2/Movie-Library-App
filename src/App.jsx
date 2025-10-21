@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Trending from './pages/Trending';
+import TheMovieDB_Logo from './assets/TMDB_logo.png';
 
 function App() {
   const {
@@ -31,6 +32,7 @@ function App() {
   };
 
   return (
+  <div>
     <BrowserRouter>
     <div>
       <div className="container text-white p-4">
@@ -49,6 +51,7 @@ function App() {
       {trendingMovies.length > 0 && <TrendingMovies movies={trendingMovies} onSelect={fetchMovie} />}
       </div>
     </div>
+    
 
       <nav className='flex justify-center'>
         <Link className='hover:text-yellow-400' to="/">Home</Link> | {" "}
@@ -62,6 +65,8 @@ function App() {
           <Route path='/trending' element={<Trending />} />
       </Routes>
     </BrowserRouter>
+    <img src={TheMovieDB_Logo} alt="" className='block mx-auto mt-12 mb-4 w-20 opacity-70'/>
+    </div>
   );
 }
 export default App;
