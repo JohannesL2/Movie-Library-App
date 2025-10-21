@@ -1,13 +1,20 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function SearchBar({ movie, setMovie, suggestions, fetchMovie }) {
+export default function SearchBar({ movie, setMovie, suggestions, setSuggestions, fetchMovie }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (movie.trim()) {
       fetchMovie(movie);
+      setMovie("");
+      setSuggestions([]);
     }
   };
+
+  const handleSelect = (title) => {
+    fetchMovie(title);
+    setMovie('');
+    setSuggestions([]);
+  }
 
   return (
     <div>
@@ -26,7 +33,7 @@ export default function SearchBar({ movie, setMovie, suggestions, fetchMovie }) 
           {suggestions.map((s) => (
             <li
               key={s.id}
-              onClick={() => fetchMovie(s.title)}
+              onClick={() => handleSelect(s.title)}
               className='p-2 cursor-pointer hover:bg-white/5'
             >
               {s.title}
@@ -47,5 +54,6 @@ SearchBar.propTypes = {
       title: PropTypes.string,
     })
   ).isRequired,
+  setSuggestions: PropTypes.func.isRequired,
   fetchMovie: PropTypes.func.isRequired,
 };

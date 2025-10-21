@@ -29,9 +29,9 @@ export default function Movies() {
 
         {movieDetails && (
             <div className='mt-6 border rounded-lg p-4 shadow-md'>
-                <h2 className='text-xl font-semibold'>{movieDetails.title}</h2>
+                <h2 className='text-xl font-semibold text-zinc-100'>{movieDetails.title}</h2>
                 {movieDetails.overview && (
-                    <p className='mt-2 text-gray-700'>{movieDetails.overview}</p>
+                    <p className='mt-2 text-white'>{movieDetails.overview}</p>
                 )}
             </div>
         )}
