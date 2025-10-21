@@ -37,7 +37,7 @@ export default function Home() {
      {/* Slideshow*/}
     <div className="w-full">
       <Slider {...sliderSettings}>
-        {movies.slice(0, 5).map((movie) => (
+        {movies.slice(0, 10).map((movie) => (
           <div key={movie.id} className="relative">
             <img 
               src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
