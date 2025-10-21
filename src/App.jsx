@@ -50,10 +50,10 @@ function App() {
       </div>
     </div>
 
-      <nav>
-        <Link to="/">Home</Link> | {" "}
-        <Link to="/movies"></Link> | {" "}
-        <Link to="/trending"></Link> | {" "}
+      <nav className='flex justify-center'>
+        <Link className='hover:text-yellow-400' to="/">Home</Link> | {" "}
+        <Link className='hover:text-yellow-400' to="/movies">Movies</Link> | {" "}
+        <Link className='hover:text-yellow-400' to="/trending">Trending</Link>
       </nav>
     {/* Routes*/}
       <Routes>
