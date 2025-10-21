@@ -13,7 +13,7 @@ import TheMovieDB_Logo from './assets/TMDB_logo.png';
 function App() {
 
   return (
-  <div className='bg-zinc-800 text-white max-w-3xl'>
+  <div className='bg-zinc-800 text-white max-w-full mx-auto'>
     <BrowserRouter>
     <header className='bg-zinc-900 py-4 shadow-md'>
       <nav className='flex justify-center gap-8'>
