@@ -10,3 +10,8 @@ export const getTrendingMovies = async () => {
   const res = await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`);
   return res.json();
 };
+
+export const getMovieDetails = async (movieId) => {
+  const res = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`);
+  return res.json();
+}

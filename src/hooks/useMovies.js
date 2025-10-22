@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { searchMovies, getTrendingMovies } from "../services/movieService";
+import { searchMovies, getTrendingMovies, getMovieDetails } from "../services/movieService";
 
 export function useMovies() {
     const [movie, setMovie] = useState("");
@@ -20,14 +20,22 @@ export function useMovies() {
 
     const fetchMovie = async (title) => {
       setLoading(true);
+      try {
       const data = await searchMovies(title);
       if (data.results?.length) {
-        setMovieDetails(data.results[0]);
+        const firstMovie = data.results[0];
+        const details = await getMovieDetails(firstMovie.id);
+        setMovieDetails(details);
       } else {
         setMovieDetails({title: "Movie not found"});
       }
+    } catch (error) {
+      console.error("Error fetching movie details:", error);
+      setMovieDetails({ title: "Error fetching movie details "});
+    } finally {
       setLoading(false);
-    };
+    }
+  };
 
     const fetchTrending = async () => {
       setLoading(true);
