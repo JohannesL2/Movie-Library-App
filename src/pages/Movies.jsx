@@ -36,7 +36,7 @@ export default function Movies() {
                 `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
                 } 
               alt={movie.title}
-              className="w-full h-[400px] object-cover" />
+              className="w-full md:w-1/3 max-w-sm rounded-2xl shadow-lg" />
                     <p className='mt-2 text-white'>{movieDetails.overview}</p>
                     </div>
                 )}
