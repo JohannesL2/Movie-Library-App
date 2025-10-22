@@ -31,7 +31,14 @@ export default function Movies() {
             <div className='mt-6 border rounded-lg p-4 shadow-md'>
                 <h2 className='text-xl font-semibold text-zinc-100'>{movieDetails.title}</h2>
                 {movieDetails.overview && (
+                    <div>
+                    <img src={
+                `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+                } 
+              alt={movie.title}
+              className="w-full h-[400px] object-cover" />
                     <p className='mt-2 text-white'>{movieDetails.overview}</p>
+                    </div>
                 )}
             </div>
         )}
