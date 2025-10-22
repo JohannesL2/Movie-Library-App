@@ -53,6 +53,9 @@ export default function Movies() {
                         {movieDetails.runtime && (
                             <p>⏱️<span>Runtime:</span> {movieDetails.runtime} min</p>
                         )}
+                        {movieDetails.revenue && (
+                            <p><span>Revenue:</span> <span>$</span>{movieDetails.revenue.toLocaleString("en-US")}</p>
+                        )}
                     </div>
                 </div>
             </div>
