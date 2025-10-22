@@ -56,6 +56,9 @@ export default function Movies() {
                         {movieDetails.revenue && (
                             <p><span>Revenue:</span> <span>$</span>{movieDetails.revenue.toLocaleString("en-US")}</p>
                         )}
+                        {movieDetails.tagline && (
+                            <p><span>Tagline:</span> {movieDetails.tagline}</p>
+                        )}
                     </div>
                 </div>
             </div>
