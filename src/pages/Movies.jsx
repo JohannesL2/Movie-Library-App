@@ -39,11 +39,14 @@ export default function Movies() {
               {/* Info */}
               <div className='flex-1'>
                     <h2 className='text-3xl font-bold mb-3 text-white'>{movieDetails.title}</h2>
-                    <p className='mt-2 text-white'>
+                    {movieDetails.tagline && (
+                            <p className='italic text-gray-300 mb-4'>{movieDetails.tagline}</p>
+                        )}
+                    <p className='mt-2 text-white leading-relaxed'>
                         {movieDetails.overview}
                     </p>
 
-                    <div className='mt-4 text-sm text-zinc-400 space-y-1'>
+                    <div className='mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-300'>
                         {movieDetails.release_data && (
                             <p>📅<span>Released:</span> {movieDetails.release_date}</p>
                         )}
@@ -55,9 +58,6 @@ export default function Movies() {
                         )}
                         {movieDetails.revenue && (
                             <p><span>Revenue:</span> <span>$</span>{movieDetails.revenue.toLocaleString("en-US")}</p>
-                        )}
-                        {movieDetails.tagline && (
-                            <p><span>Tagline:</span> {movieDetails.tagline}</p>
                         )}
                     </div>
                 </div>
