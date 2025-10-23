@@ -9,14 +9,18 @@ export function useMovies() {
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
+    const timer = setTimeout(() => {
       if (movie.length > 2) {
         searchMovies(movie).then(data => {
           setSuggestions(data.results?.slice(0, 5) || []);
-        });
+        }).catch(err => console.error(err));
       } else {
         setSuggestions([]);
       }
-    }, [movie]);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [movie]);
 
     const fetchMovie = async (title) => {
       setLoading(true);
