@@ -42,12 +42,22 @@ export default function Movies() {
                     {movieDetails.tagline && (
                             <p className='italic text-gray-300 mb-4'>{movieDetails.tagline}</p>
                         )}
+
+                    {movieDetails.genres && movieDetails.genres.length > 0 && (
+                        <div className='flex flex-wrap gap-2 mb-4'>
+                        {movieDetails.genres.map((genre) => (
+                            <span key={genre.id} className='bg-indigo-600/30 text-indigo-200 px-3 py-1 rounded-full text-sm font-medium hover:text-white transition-colors cursor-default'>
+                            {genre.name}
+                            </span>
+                        ))}
+                        </div>
+                    )}    
                     <p className='mt-2 text-white leading-relaxed'>
                         {movieDetails.overview}
                     </p>
 
                     <div className='mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-300'>
-                        {movieDetails.release_data && (
+                        {movieDetails.release_date && (
                             <p>📅<span>Released:</span> {movieDetails.release_date}</p>
                         )}
                         {movieDetails.vote_average && (
