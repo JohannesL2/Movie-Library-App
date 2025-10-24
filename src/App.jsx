@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Trending from './pages/Trending';
 import TheMovieDB_Logo from './assets/TMDB_logo.png';
+import Random from './pages/Random';
 
 function App() {
 
@@ -35,8 +36,15 @@ function App() {
           ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
           : "text-white hover:text-yellow-400"
         } to="/trending">Trending</NavLink>
+
+        <NavLink className={({ isActive }) =>
+        isActive
+          ? "text-yellow-400 border-b-2 border-yellow-400 pb-1"
+          : "text-white hover:text-yellow-400"
+        } to="/random">Random</NavLink>
       </nav>
     </header>
+
 
     {/* Routes*/}
     <main className='p-4'>
@@ -44,6 +52,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/trending' element={<Trending />} />
+          <Route path='/random' element={<Random />} />
       </Routes>
     </main>
 

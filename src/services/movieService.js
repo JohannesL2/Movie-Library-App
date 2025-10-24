@@ -15,3 +15,8 @@ export const getMovieDetails = async (movieId) => {
   const res = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`);
   return res.json();
 }
+
+export const getRandomMovie = async (randomId) => {
+  const res = await fetch(`${BASE_URL}/movie/${randomId}?api_key=${API_KEY}&language=en-US`)
+  return res.json();
+}
